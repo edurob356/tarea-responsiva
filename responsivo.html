@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciclando Juntos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: #56ca62;
+
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header responsivo */
+        header {
+            background: linear-gradient(135deg, #4a7c59, #5a8c69);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            text-align: center;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: #4a7c59;
+            transform: skewY(-1deg);
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Navegación responsiva */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 0;
+            border-bottom: 3px solid #e0e0e0;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: white;
+            background: #4a7c59;
+            transform: translateY(-2px);
+        }
+
+        /* Sección principal responsiva */
+        .main-section {
+            padding: 3rem 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .intro h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: #2c5530;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .intro p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #666;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Grid completamente responsivo */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .big-card {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .big-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+        }
+
+        .big-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .big-card h3 {
+            color: #4a7c59;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .big-card p {
+            color: #333;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Tarjetas pequeñas responsivas */
+        .small-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:nth-child(1) {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+        }
+
+        .card:nth-child(2) {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+        }
+
+        .card:nth-child(3) {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+        }
+
+        .card:nth-child(4) {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+        }
+
+        .card {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 0.8;
+        }
+
+        .card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .card h4 {
+            color: #2c5530;
+            margin-bottom: 0.75rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #555;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+
+        /* Sección de consejos responsiva */
+        .tips-section {
+            background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnVuMGxldWgxd2ZoYjI3N2MxcDByZTcybXRoZW1zNGYxcWNuMGtrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1rSOdtLQwoxz2f6hbf/giphy.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 3rem 0;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .tips-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(74, 124, 89, 0.8);
+            z-index: 1;
+        }
+
+        .tips-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .tips-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-left: 4px solid #4a7c59;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .tip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .tip strong {
+            color: #2c5530;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 600;
+        }
+
+        .tip span {
+            color: #666;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            line-height: 1.4;
+        }
+
+        /* Sección de acción responsiva */
+        .action-section {
+            text-align: center;
+            padding: 3rem 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .action-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: #2c5530;
+            margin-bottom: 1rem;
+        }
+
+        .action-section p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, #4a7c59, #5a8c69);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 124, 89, 0.4);
+        }
+
+        /* Footer responsivo */
+        footer {
+            background: #333;
+            color: #ccc;
+            text-align: center;
+            padding: 2rem 0;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Media queries para ajustes específicos */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .main-section,
+            .action-section {
+                padding: 2rem 0;
+                margin: 1rem 0;
+            }
+
+            .tips-section {
+                background-attachment: scroll;
+                padding: 2rem 0;
+            }
+
+            .tips-list {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .big-card {
+                padding: 1.5rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            header {
+                padding: 1.5rem 0;
+            }
+
+            .small-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .tip {
+                padding: 1.25rem;
+            }
+
+            .action-button {
+                padding: 0.875rem 1.5rem;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animaciones suaves */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .tip, .big-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Mejoras de accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Reciclando Juntos</h1>
+            <p class="subtitle">Cuidemos nuestro barrio y el medio ambiente</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#info">Información</a></li>
+                <li><a href="#consejos">Consejos</a></li>
+                <li><a href="#participa">Participa</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="main-section">
+            <div class="container">
+                <div class="intro">
+                    <h2>¿Por qué reciclar?</h2>
+                    <p>Cada vez que separamos la basura correctamente, estamos ayudando al planeta. No es complicado, solo necesita un poco de práctica.</p>
+                    <p>En nuestro barrio podemos hacer mucho si todos ponemos de nuestra parte.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="big-card">
+                        <h3>Lo básico que debes saber</h3>
+                        <p>El reciclaje funciona cuando separamos bien los materiales. El papel va con papel, el plástico con plástico, y así. Si todo está mezclado, es muy difícil que se pueda procesar después.</p>
+                        <p>También es importante que los envases estén limpios. No hace falta que brillen, pero sí que no tengan restos de comida pegados.</p>
+                    </div>
+                </div>
+
+                <div class="small-cards">
+                    <div class="card">
+                        <h4>En la cocina</h4>
+                        <p>Ten dos bolsas: una para orgánicos y otra para envases. Es más fácil separar desde el momento en que tiras algo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Papel y cartón</h4>
+                        <p>Quita las grapas y cintas adhesivas. El papel mojado o muy sucio va a orgánicos, no al contenedor azul.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Vidrio</h4>
+                        <p>Botellas y frascos van al contenedor verde. Las bombillas y espejos no, esos tienen otros componentes.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Plásticos</h4>
+                        <p>Fíjate en el símbolo de reciclaje. Casi todos los envases de comida y bebida se pueden reciclar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tips-section">
+            <div class="container">
+                <h2 class="tips-title">Consejos que realmente funcionan</h2>
+                <div class="tips-list">
+                    <div class="tip">
+                        <strong>Usa la regla de los 5 segundos</strong>
+                        <span>Antes de tirar algo, piensa 5 segundos si se puede usar para otra cosa</span>
+                    </div>
+                    <div class="tip">
+                        <strong>Enjuaga en el fregadero</strong>
+                        <span>Mientras lavas platos, aprovecha para enjuagar envases que vas a reciclar</span>
+                    </div>
+                    <div class="tip">
+                        <strong>Compra menos empaquetado</strong>
+                        <span>En el súper, elige productos con menos plástico o en envases retornables</span>
+                    </div>
+                    <div class="tip">
+                        <strong>Pregunta a los vecinos</strong>
+                        <span>Si tienes dudas sobre dónde va algo, pregunta. Todos estamos aprendiendo</span>
+                    </div>
+                    <div class="tip">
+                        <strong>Empieza poco a poco</strong>
+                        <span>No tienes que ser perfecto desde el primer día. Ve incorporando nuevos hábitos gradualmente</span>
+                    </div>
+                    <div class="tip">
+                        <strong>Los niños aprenden rápido</strong>
+                        <span>Si tienes hijos, enséñales. Ellos suelen ser muy buenos recordándote las reglas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="action-section">
+            <div class="container">
+                <h2>¿Te animas a empezar?</h2>
+                <p>No hace falta que cambies todo de una vez. Puedes comenzar separando solo papel y cartón esta semana.</p>
+                <a href="#" class="action-button">Quiero participar</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Proyecto comunitario de reciclaje - Hagámoslo juntos</p>
+        </div>
+    </footer>
+</body>
+</html>
